@@ -1,0 +1,38 @@
+ <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark  "
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav col-md-3 offset-md-9 nav">
+      <li class="nav-item">
+        <a class="nav-link " href="guest">Nastavi kao gost! </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registration">Registruj se!</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <form class="box">
+          <h2 style="color: whitesmoke;">Resetovanje lozinke</h2>
+          <p class="text-muted"> Unesi svoj email</p>
+          <input type="text" name="email" [(ngModel)]="email" placeholder="email">
+          <div class=" alert alert-danger col-12 offset-18"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow1)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow1}}</label>
+          </div>
+          <button (click)="send()">Posalji mejl</button>
+          <div style="color: whitesmoke;" *ngIf='(this.message!="")'>
+            <label style="text-align: center; vertical-align: middle;">{{this.message}}</label>
+          </div>
+          <button routerLink="" style="margin: 6px auto;padding: 8px 10px;" *ngIf='(this.message=="")'>Odustani</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

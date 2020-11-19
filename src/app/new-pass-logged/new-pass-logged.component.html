@@ -1,0 +1,66 @@
+
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;"
+*ngIf="this.user.type!='guest'">
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav  offset-9 nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Meni
+      </a>
+      <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+        <a class="dropdown-item pozadina" href="user">Profil</a>
+        <a class="dropdown-item pozadina" href="searchUser">Pretraga korisnika</a>
+        <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+        <a class="dropdown-item pozadina" href="newBook">Dodavanje knjige</a>
+        <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        <a class="dropdown-item pozadina" href="newEvent">Dodavanje dogadjaja</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Dodavanje zanra</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Brisanje zanra</a>
+        <a class="dropdown-item pozadina" href="newPassword">Menjanje lozinke</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+    </li>
+
+  </ul>
+</div>
+</nav>
+<br><br><br>
+
+<div style="text-align: center;">
+  <h3>Cao, {{this.user.name}}</h3>
+</div>
+
+<div class="container">
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <form class="box">
+        <h2 style="color: whitesmoke;">Resetovanje lozinke</h2>
+        <p class="text-muted"> Unesite staru i novu lozinku!</p>
+        <input type="password" name="oldPassword" [(ngModel)]="oldPassword" placeholder="Stara lozinka"><div class=" alert alert-danger col-12 offset-18"
+        style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow0)">
+        <label style="text-align: center; vertical-align: middle;">{{this.messageRow0}}</label>
+      </div>
+        <input type="password" name="newPassword" [(ngModel)]="newPassword" placeholder="Lozinka">
+        <div class=" alert alert-danger col-12 offset-18"
+          style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow1)">
+          <label style="text-align: center; vertical-align: middle;">{{this.messageRow1}}</label>
+        </div>
+        <input type="password" name="newPassword2" [(ngModel)]="newPassword2" placeholder="Ponovite lozinku">
+        <div class=" alert alert-danger col-12 offset-18"
+          style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px; " *ngIf="(this.messageRow2)">
+          <label style="text-align: center; vertical-align: middle;">{{this.messageRow2}}</label>
+        </div>
+        <button (click)="newPass()">Resetuj</button>
+        <div style="color: whitesmoke;">
+          {{oldPassword}}||{{newPassword}}||{{this.newPassword2}}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

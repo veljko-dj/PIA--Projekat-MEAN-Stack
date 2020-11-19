@@ -1,0 +1,135 @@
+
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;"
+*ngIf="this.user.type!='guest'">
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav  offset-9 nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Meni
+      </a>
+      <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+        <a class="dropdown-item pozadina" href="user">Profil</a>
+        <a class="dropdown-item pozadina" href="searchUser">Pretraga korisnika</a>
+        <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+        <a class="dropdown-item pozadina" href="newBook">Dodavanje knjige</a>
+        <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        <a class="dropdown-item pozadina" href="newEvent">Dodavanje dogadjaja</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Dodavanje zanra</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Brisanje zanra</a>
+        <a class="dropdown-item pozadina" href="newPassword">Menjanje lozinke</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+    </li>
+
+  </ul>
+</div>
+</nav>
+<br><br><br>
+
+<div class="col-10 offset-1">
+  <div style="text-align: center;">
+    <h1>Kreiranje dogadjaja</h1>
+  </div>
+  <mat-horizontal-stepper #stepper linear style="background-color: #292b2c; border-radius: 25px;">
+    <mat-step label="Naziv" completed={{completed1}}>
+      <div style="text-align: center;">
+        <p style="color: whitesmoke"> Unesite naziv Vaseeg dogadjaja </p>
+        <input type="text" style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 40%;"
+          placeholder="Naziv" name="this.name" [(ngModel)]="this.name">
+      </div>
+      <div class="row alert alert-danger col-md-6 offset-3 "
+        style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px; margin-top: 10px"
+        *ngIf="(this.messageError)">
+        <label style="text-align: center; vertical-align: middle;">{{this.messageError}}</label>
+      </div>
+      <div style="text-align: center;">
+        <button matStepperPrevious style="margin: 10px;"> Nazad</button>
+        <button matStepperNext (click)="next1(stepper)"> Napred</button>
+      </div>
+    </mat-step>
+    <mat-step label="Pocetak" completed={{completed2}}>
+      <div style="text-align: center;">
+        <p style="color: whitesmoke"> Unesite datum pocetka dogadjaja </p>
+        <input type="date" style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 40%;"
+          placeholder="Naziv" name="this.startDate" [(ngModel)]="this.startDate">
+      </div>
+      <div style="text-align: center;">
+        <label style="text-align: center; color: whitesmoke">Za vec aktivno desavanje
+          kliknite <p (click)="next22(stepper )" class="ovde"> ovde.</p></label>
+      </div>
+      <div class="row alert alert-danger col-md-6 offset-3 "
+        style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px; margin-top: 10px"
+        *ngIf="(this.messageError)">
+        <label style="text-align: center; vertical-align: middle;">{{this.messageError}}</label>
+      </div>
+      <div style="text-align: center;">
+        <button matStepperPrevious style="margin: 10px;"> Nazad</button>
+        <button matStepperNext (click)="next2(stepper)"> Napred</button>
+      </div>
+    </mat-step>
+    <mat-step label="Kraj" completed={{completed3}}>
+      <div style="text-align: center;">
+        <p style="color: whitesmoke"> Unesite datum kraja dogadjaja </p>
+        <input type="date" style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 40%;"
+          placeholder="Naziv" name="this.endDate" [(ngModel)]="this.endDate">
+      </div>
+      <div style="text-align: center;">
+        <label style="text-align: center; color: whitesmoke">Za desavanje bez kraja
+          kliknite <p (click)="next33(stepper )" class="ovde"> ovde.</p></label>
+      </div>
+      <div class="row alert alert-danger col-md-6 offset-3 "
+        style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px; margin-top: 10px"
+        *ngIf="(this.messageError)">
+        <label style="text-align: center; vertical-align: middle;">{{this.messageError}}</label>
+      </div>
+      <div style="text-align: center;">
+        <button matStepperPrevious style="margin: 10px;"> Nazad</button>
+        <button matStepperNext (click)="next3(stepper)"> Napred</button>
+      </div>
+    </mat-step>
+    <mat-step label="Opis" completed={{completed4}}>
+      <div style="text-align: center;">
+        <p style="color: whitesmoke"> Unesite opis dogadjaja </p>
+        <textarea cols="40" rows="2" style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 40%;"
+          placeholder="Opis" name="this.description" [(ngModel)]="this.description">Opis </textarea>
+      </div>
+      <div class="row alert alert-danger col-md-6 offset-3 "
+        style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px; margin-top: 10px"
+        *ngIf="(this.messageError)">
+        <label style="text-align: center; vertical-align: middle;">{{this.messageError}}</label>
+      </div>
+      <div style="text-align: center;">
+        <button matStepperPrevious style="margin: 10px;"> Nazad</button>
+        <button matStepperNext (click)="next4(stepper)"> Napred</button>
+      </div>
+    </mat-step>
+    <mat-step label="Privatnost">
+      <div style="text-align: center; color: whitesmoke">
+        <p> Odredite privatnost dogadjaja </p>
+        <input type='radio' name='public' [(ngModel)]="this.public" value="no" > Privatno
+        <input style="margin-left: 10px;" type='radio' name='public' [(ngModel)]="this.public" value="yes" *ngIf="user.type!='user'"> <label *ngIf="user.type!='user'">Javno </label>
+        <br>
+        <select multiple style="width: 3cm; background-color: #292b2c; color: lightgrey;" *ngIf="public=='no'"
+          name="this.privateList" [(ngModel)]="this.privateList">
+          <option *ngFor="let user of following" value="{{ user.idUserTo  +'DELIMG' + user.usernameTo }}"
+            label="{{user.usernameTo}}"></option>
+        </select>
+        <div class="row alert alert-danger col-md-6 offset-3 "
+          style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px; margin-top: 10px"
+          *ngIf="(this.messageError)">
+          <label style="text-align: center; vertical-align: middle;">{{this.messageError}}</label>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button matStepperPrevious style="margin: 10px;"> Nazad</button>
+        <button matStepperNext (click)="next5(stepper)"> Napred</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
+<!-- {{this.following.length}}{{this.following}} -->

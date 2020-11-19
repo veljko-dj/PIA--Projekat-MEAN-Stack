@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark  "
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav col-md-3 offset-md-9 nav">
+      <li class="nav-item">
+        <a class="nav-link " href="newPassword">Promeni lozinku </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login" (click)="logOut()">Odjavi se!</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+<div style="text-align: center;">
+  <h3>Cao, {{this.user.name}}</h3>
+  {{this.user.photoPath}} <br>
+  <img id="32" src="{{this.user.photoPath}}" [alt]="'poy'" height="200 px " width="200 px" style="padding-top: 10px;"  >
+</div>

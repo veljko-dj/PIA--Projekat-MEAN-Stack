@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark  "
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav col-md-3 offset-md-9 nav">
+      <li class="nav-item">
+        <a class="nav-link " href="guest">Nastavi kao gost! </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login">Uloguj se!</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="card">
+        <form class="box">
+          <h1>Registruj se</h1>
+          <div class="row">
+            <input type="text" name="name" [(ngModel)]="name" placeholder="Ime" required>
+            <input type="text" name="surname" [(ngModel)]="surname" placeholder="Prezime">
+          </div>
+          <div class="row alert alert-danger col-md-6 offset-3"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow1)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow1}}</label>
+          </div>
+          <div class="row">
+            <input type="date" name="date" [(ngModel)]="date">
+            <input type="text" name="town " [(ngModel)]="town " placeholder="Grad, Drzava stanovanja">
+          </div>
+          <div class="row alert alert-danger col-md-6 offset-3"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow2)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow2}}</label>
+          </div>
+          <div class="row">
+            <input type="text" name="username " [(ngModel)]="username " placeholder="Korisnicko ime">
+            <input type="text" name="email " [(ngModel)]="email " placeholder="Email">
+          </div>
+          <div class="row alert alert-danger col-md-6 offset-3"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow3)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow3}}</label>
+          </div>
+          <div class="row">
+            <input type="password" name=" password" [(ngModel)]=" password" placeholder="Lozinka">
+            <input type="password" name=" password2" [(ngModel)]="password2" placeholder="Ponovite lozinku">
+          </div>
+          <div class="row alert alert-danger col-md-6 offset-3"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow4)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow4}}</label>
+          </div>
+          <div class="row">
+            <label style="color: grey; text-align: right ;padding-top:33px;
+                   padding-left: 45px; vertical-align: middle;"> Profilna fotografija : </label>
+            <input #imageInput type="file"accept="image/png, image/jpeg, image/jpg" style="margin-left: 0;"
+              (change)="checkPhoto($event)" multiple="false">
+             <!-- <img id="32" src="photoURL" [alt]="'poy'" height="40 px " width="40 px" style="padding-top: 10px;" *ngIf="(this.photoURL)"> -->
+          </div>
+         <div class="row alert alert-danger col-md-6 offset-3"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px"
+            *ngIf="(this.messageRow5)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow5}}</label>
+          </div>
+          <div class="row">
+             <form class="offset-3" [formGroup]="aFormGroup">
+              <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha" [hl]='"sr"' [theme]='"dark"'
+                (reset)="handleReset()" (expire)="handleExpire()" (load)="handleLoad()"
+                (success)="handleSuccess($event)">
+              </ngx-recaptcha2>
+            </form>
+            <div class=" alert alert-danger col-12 offset-18"
+              style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow6)">
+              <label style="text-align: center; vertical-align: middle;">{{this.messageRow6}}</label>
+            </div>
+          </div>
+          <button  (click)="addUser()"> Registracija </button>
+          <div class="row" style=" color:whitesmoke">
+            {{this.name}} ||{{this.surname}} ||{{this.date}} ||{{this.town}} ||{{this.username}} ||{{this.email}}
+            ||{{this.password}} ||{{this.password2}}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

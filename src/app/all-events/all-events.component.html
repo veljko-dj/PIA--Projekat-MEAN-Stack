@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;" *ngIf="this.user.type=='guest'">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav  offset-9 nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Meni
+        </a>
+        <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+          <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="login">Uloguj se! </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registration">Registruj se!</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<br>
+
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;" *ngIf="this.user.type!='guest'">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav  offset-9 nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Meni
+        </a>
+        <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item pozadina" href="user">Profil</a>
+          <a class="dropdown-item pozadina" href="searchUser">Pretraga korisnika</a>
+          <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+          <a class="dropdown-item pozadina" href="newBook">Dodavanje knjige</a>
+          <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+          <a class="dropdown-item pozadina" href="newEvent">Dodavanje dogadjaja</a>
+          <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Dodavanje zanra</a>
+          <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Brisanje zanra</a>
+          <a class="dropdown-item pozadina" href="newPassword">Menjanje lozinke</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+<label class="col-6 offset-3" style="text-align: center;"> {{this.message}}</label>
+<table class="table table-dark" style="border-radius: 25px; border-top-left-radius: 0mm; border-top-right-radius: 0mm;
+color: lightgrey;" *ngIf="this.events">
+  <tr>
+    <th style="width: 20%;"> Naziv </th>
+    <th style="width: 20%;"> Pocetak </th>
+    <th style="width: 20%;" *ngIf="this.user.type!='guest'"> Kraj </th>
+    <th style="width: 20%;" *ngIf="this.user.type!='guest'"> Opis </th>
+    <th style="width: 20%;"> Javno? </th>
+  </tr>
+  <tr *ngFor='let evennt of this.events'>
+    <td style="vertical-align: middle;"><a href="event/{{evennt.id}}"
+        *ngIf="this.user.type!='guest'">{{evennt.name}}</a>
+      <a *ngIf="this.user.type=='guest'">{{evennt.name}}</a></td>
+    <td style="vertical-align: middle;"> {{evennt.dateStart}} </td>
+    <td style="vertical-align: middle;" *ngIf="this.user.type!='guest'">
+     <label *ngIf="!this.neograniceno(evennt.dateEnd, evennt.dateStart)">     {{ evennt.dateEnd }}</label>
+       <label *ngIf="this.neograniceno(evennt.dateEnd, evennt.dateStart)"> Neograniceno </label>
+    </td>
+    <td style="vertical-align: middle;" *ngIf="this.user.type!='guest'"> {{evennt.description}} </td>
+    <td style="vertical-align: middle;"> {{evennt.public}} </td>
+  </tr>
+</table>

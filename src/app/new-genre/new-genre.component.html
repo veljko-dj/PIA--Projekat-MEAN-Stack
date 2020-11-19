@@ -1,0 +1,61 @@
+
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;"
+*ngIf="this.user.type!='guest'">
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav  offset-9 nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Meni
+      </a>
+      <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+        <a class="dropdown-item pozadina" href="user">Profil</a>
+        <a class="dropdown-item pozadina" href="searchUser">Pretraga korisnika</a>
+        <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+        <a class="dropdown-item pozadina" href="newBook">Dodavanje knjige</a>
+        <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        <a class="dropdown-item pozadina" href="newEvent">Dodavanje dogadjaja</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Dodavanje zanra</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Brisanje zanra</a>
+        <a class="dropdown-item pozadina" href="newPassword">Menjanje lozinke</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+    </li>
+
+  </ul>
+</div>
+</nav>
+<br><br><br>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <form class="box">
+          <h2 style="color: whitesmoke;">Dodavanje zanra</h2>
+          <input type="text" name="newGenre" [(ngModel)]="newGenre" placeholder="Zanr">
+          <div class=" alert alert-danger col-12 offset-18"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow1)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow1}}</label>
+          </div>
+          <button (click)="addGenre()">Dodaj</button>
+          <div style="color: whitesmoke;">
+            {{message}}
+          </div>
+          <h2 style="color: whitesmoke;">Brisanje zanra</h2>
+          <select name="deleteGenre" [(ngModel)]="deleteGenre" style="width: 5cm;background-color: #292b2c; color: lightgrey;">
+            <option selected value="Zanr">...</option>
+            <option *ngFor="let genre1 of  genres" value="{{genre1.name}}" label="{{genre1.name}}"></option>
+          </select>
+          <button (click)="deleteGenree()">Obrisi</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

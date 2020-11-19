@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;"
+  *ngIf=" user && this.user.type=='guest'">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav  offset-9 nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Meni
+        </a>
+        <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+          <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="login">Uloguj se! </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registration">Registruj se!</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+
+<h2><b style="padding-left: 5%; font: 10px;">Kao gost imate sledece mogucnosti. Za jos dodatnih usluga neophodno je da
+    se registrujete.</b></h2>
+<div style="padding-left:10% ;">
+  <h3>&ordm; <a href="searchBook">Pretrazujte knjige u nasoj biblioteci </a></h3>
+  <h3>&ordm; <a href="allEvents"> Pogledajte sva buduca desavanja </a> <br></h3>
+</div>

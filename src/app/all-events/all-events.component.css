@@ -1,0 +1,11 @@
+
+.pozadina:hover{
+  background: darkgrey;
+}
+.pozadina{
+  color: lightgrey;
+}
+
+ul.nav a:hover {
+  color: lightgreen;
+}

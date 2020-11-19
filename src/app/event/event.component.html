@@ -1,0 +1,178 @@
+
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;"
+*ngIf="this.user.type!='guest'">
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav  offset-9 nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Meni
+      </a>
+      <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+        <a class="dropdown-item pozadina" href="user">Profil</a>
+        <a class="dropdown-item pozadina" href="searchUser">Pretraga korisnika</a>
+        <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+        <a class="dropdown-item pozadina" href="newBook">Dodavanje knjige</a>
+        <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        <a class="dropdown-item pozadina" href="newEvent">Dodavanje dogadjaja</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Dodavanje zanra</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Brisanje zanra</a>
+        <a class="dropdown-item pozadina" href="newPassword">Menjanje lozinke</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+    </li>
+
+  </ul>
+</div>
+</nav>
+{{user.type}}
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;" *ngIf=" user && this.user.type=='guest'">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav  offset-9 nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Meni
+        </a>
+        <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+          <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="login">Uloguj se! </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registration">Registruj se!</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+{{isActive}}++++
+
+<div *ngIf="this.event">
+  {{this.event.guests}}<br>
+  {{this.event.valid}}<br>
+</div>
+<div class="row  ">
+  <div class="col-3 offset-1">
+    <form>
+      <table *ngIf="this.event">
+        <tr>
+          <td><b>Naziv: &nbsp;</b></td>
+          <td style=" text-align: center;">
+            <label> {{ this.event.name}}</label>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Organizator: &nbsp;</b></td>
+          <td style=" text-align: center;">
+            <label> <a href="user/{{this.creator.id}}">{{ this.creator.username}}</a></label>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Datum pocetka: &nbsp;</b></td>
+          <td style=" text-align: center;">
+            <label *ngIf="this.event.dateStart"> {{ this.event.dateStart }}</label>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Datum yavrsetka: &nbsp;</b></td>
+          <td style=" text-align: center;">
+            <label *ngIf="this.event.dateEnd && !this.neograniceno()"> {{ this.event.dateEnd }}</label>
+            <label *ngIf="this.neograniceno()"> Neograniceno </label>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Opis: &nbsp;</b></td>
+          <td style=" text-align: center;">
+            <label>
+              {{ this.event.description}}</label>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Privatnost: &nbsp;</b></td>
+          <td style=" text-align: center;  ">
+            <label *ngIf="this.event.public=='yes'">
+              Javno </label>
+            <label *ngIf="this.event.public=='no'">
+              Privatno </label>
+          </td>
+        </tr>
+
+      </table>
+    </form>
+  </div>
+  <div class="col-4" *ngIf="this.event">
+    <label *ngIf="this.isActive">
+      <h2> Desavanje je trenutno aktivno</h2>
+    </label>
+    <div *ngIf="this.isActive && showEverything">
+      <button (click)="closeEvent()">Zatvori desavanje</button>
+    </div>
+    <label *ngIf="!this.isActive">
+      <h2> Desavanje nije trenutno aktivno</h2>
+    </label>
+    <div *ngIf="!this.isActive && showEverything && !disableButton">  <!--Ovde si nabudzio disable button-->
+      <button (click)="openEvent()">Otvori desavanje</button>
+    </div>
+  </div>
+
+  <div class="col-2" *ngIf="this.event  && showEverything && this.isActive">
+    <b>Ovi korisnici su poslali zahtev:</b>
+    <select multiple style="width: 3cm; background-color: #292b2c; color: lightgrey;" *ngIf="this.allRequests.length>0"
+      name="this.acceptedRequests" [(ngModel)]="this.acceptedRequests">
+      <option *ngFor="let user of this.allRequests" value="{{ user.idUser  +'DELIMG' + user.username }}"
+        label="{{user.username}}"></option>
+    </select>
+    <button *ngIf="this.allRequests.length>0" (click)="acceptReq()">Dodaj korisnike</button>
+    {{messageAllReqs}}
+  </div>
+  <div class="col-2" *ngIf="this.event && showToUser==false && this.isActive">
+    <b>Ukoliko zelite da prisustvujete posaljite zahtev organizatoru:</b>
+    <button *ngIf="this.messageSendReq==''" (click)="sendReq()">Posalji</button>
+    {{messageSendReq}}
+  </div>
+
+  <div class="row col-12 " style="margin: 20px auto" *ngIf="this.event && showToUser==true">
+    <label *ngIf="!this.showComments" (click)="(this.showComments=true)"> Prikazi diskusiju: </label>
+    <i *ngIf="!this.showComments" (click)="(this.showComments=true)" class="material-icons"
+      style="vertical-align: middle;">keyboard_arrow_down</i>
+    <label *ngIf="this.showComments" (click)="(this.showComments=false)"> Sakrij diskusiju: </label>
+    <i *ngIf="this.showComments" (click)="(this.showComments=false)" class="material-icons"
+      style="vertical-align: middle;">keyboard_arrow_up</i>
+    <table *ngIf="this.showComments && this.allComments.length>0" class="table table-dark" style="border-radius: 25px; border-top-left-radius: 0mm; border-top-right-radius: 0mm;
+      color: lightgrey; background-color:   #292b2c ;">
+      <tr>
+        <th style="width: 3cm;"> Korisnik: </th>
+        <th > Komentar: </th>
+      </tr>
+      <tr *ngFor='let comment1 of allComments'>
+        <td> <a href="user/{{comment1.idUser}}">{{comment1.username}}</a> </td>
+        <td> {{comment1.comment}} </td>
+      </tr>
+    </table>
+    <label style="text-align: center;" class="col-12" *ngIf="this.showComments && this.allComments.length==0"> Ne
+      postoje komentari za ovu kjnigu</label>
+  </div>
+  <div class="col-12 " style="text-align: center;" *ngIf="this.showComments  && isActive">
+    <div>
+      <textarea maxlength="100" class="col-9 unos" rows="2" name="description" [(ngModel)]="this.comm"
+        placeholder=" Komentar do 100 karaktera.."> </textarea>
+    </div>
+    <div>
+      <button class="zelenoDugme " (click)="addComment()"> Posalji </button>
+    </div>
+    <div class="row alert alert-danger" style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px"
+      *ngIf="(this.messageCommError)">
+      <label style="text-align: center; vertical-align: middle;">{{this.messageCommError}}</label>
+    </div>
+  </div>
+</div>

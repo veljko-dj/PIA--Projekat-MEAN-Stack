@@ -1,0 +1,100 @@
+
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;"
+*ngIf="this.user.type!='guest'">
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav  offset-9 nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Meni
+      </a>
+      <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+        <a class="dropdown-item pozadina" href="user">Profil</a>
+        <a class="dropdown-item pozadina" href="searchUser">Pretraga korisnika</a>
+        <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+        <a class="dropdown-item pozadina" href="newBook">Dodavanje knjige</a>
+        <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        <a class="dropdown-item pozadina" href="newEvent">Dodavanje dogadjaja</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Dodavanje zanra</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Brisanje zanra</a>
+        <a class="dropdown-item pozadina" href="newPassword">Menjanje lozinke</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+    </li>
+
+  </ul>
+</div>
+</nav>
+<br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="card">
+        <form class="box">
+          <h1>Dodaj knjigu</h1>
+          <div class="row">
+            <input type="text" name="title" [(ngModel)]="title" placeholder="Naziv" required>
+            <input type="text" name="authors" [(ngModel)]="authors" placeholder="Autor">
+          </div>
+          <div class="row alert alert-danger col-md-6 offset-3"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow1)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow1}}</label>
+          </div>
+          <div class="row">
+            <input type="date" name="date" [(ngModel)]="date">
+          </div>
+          <div class="row alert alert-danger col-md-6 offset-3"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow2)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow2}}</label>
+          </div>
+          <div class="row ">
+            <textarea cols="40" rows="3" name="description" [(ngModel)]="description" style="background-color: #292b2c;
+            border: 2px solid lightgrey; border-radius: 24px; color: lightgrey;" placeholder="Opis knjige"> </textarea>
+            <div class="col-2 offset-1 row ">
+              <div class="row">
+                <select name="genre0" [(ngModel)]="genre0"
+                  style="width: 5cm;background-color: #292b2c; color: lightgrey;">
+                  <option selected value="Zanr">Zanr</option>
+                  <option *ngFor="let genre1 of  genres" value="{{genre1.name}}" label="{{genre1.name}}"></option>
+                </select> </div>
+              <div class="row">
+                <select name="genre1" [(ngModel)]="genre1"
+                  style="width: 5cm;background-color: #292b2c; color: lightgrey;">
+                  <option selected value="Zanr">Zanr</option>
+                  <option *ngFor="let genre1 of  genres" value="{{genre1.name}}" label="{{genre1.name}}"></option>
+                </select></div>
+              <div class="row">
+                <select name="genre2" [(ngModel)]="genre2"
+                  style="width: 5cm; background-color: #292b2c; color: lightgrey;">
+                  <option selected="selected" value="Zanr">Zanr</option>
+                  <option *ngFor="let genre1 of  genres" value="{{genre1.name}}" label="{{genre1.name}}"></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row alert alert-danger col-md-6 offset-3 "
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow3)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow3}}</label>
+          </div>
+          <div class="row">
+            <label style="color: grey; text-align: right ;padding-top:33px;
+                   padding-left: 45px; vertical-align: middle;"> Fotografija knjige: </label>
+            <input #imageInput type="file" accept="image/*" style="margin-left: 0;" (change)="checkPhoto($event)"
+              multiple="false">
+            <!-- <img id="32" src="photoURL" [alt]="'poy'" height="40 px " width="40 px" style="padding-top: 10px;" *ngIf="(this.photoURL)"> -->
+          </div>
+          <button (click)="addBook()"> Dodaj knjigu</button>
+          <div class="row" style=" color:whitesmoke">
+            {{message}}
+          </div>
+
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

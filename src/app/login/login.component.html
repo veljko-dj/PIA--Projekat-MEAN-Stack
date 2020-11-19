@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark  "
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav col-md-3 offset-md-9 nav">
+      <li class="nav-item">
+        <a class="nav-link " href="guest" (click)="continueAsGuest()">Nastavi kao gost! </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registration">Registruj se!</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+<a name="top"></a>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <form class="box">
+          <h1>Uloguj se</h1>
+          <p class="text-muted"> Unesite korisničko ime i lozinku!</p>
+          <input type="text" name="username" [(ngModel)]="username" placeholder="Korisnicko ime">
+          <div class=" alert alert-danger col-12 offset-18"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageRow1)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow1}}</label>
+          </div>
+          <input type="password" name="pass" [(ngModel)]="pass" placeholder="Lozinka">
+          <div class=" alert alert-danger col-12 offset-18"
+            style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px; " *ngIf="(this.messageRow2)">
+            <label style="text-align: center; vertical-align: middle;">{{this.messageRow2}}</label>
+          </div>
+          <a class="forgot text-muted" href="resetPassword">Forgot password?</a>
+          <button (click)="login()">Uloguj se</button>
+          <div style="color: whitesmoke;">
+            {{username}}||{{pass}}
+          </div>
+          <div *ngIf="(this.messageFromAnotherComp!='')" style="color: grey;">
+            <h2>{{this.messageFromAnotherComp}} </h2>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+Ukloni pocetne vrednosti
+</div>
+
+
+<br><br><br>
+<footer class="page-footer font-small special-color-dark  fixed-bottom bg-dark">
+  <div class="footer-copyright text-center py-3" style="color: grey;">© 2020 Copyright:
+    <a href="">Veljko</a> &nbsp; &nbsp; &nbsp;
+    Contact:
+    <a href="mailto:djorovicveljko@gmail.com">djorovicveljko@gmail.com</a>
+    &nbsp; &nbsp; &nbsp;
+    <a href="#top">Skoci na vrh</a>
+    &nbsp; &nbsp; &nbsp;
+    Futer postoji samo na pocetnoj strani jer mi se ne svidja pojava nepotpunog futera
+  </div>
+</footer>

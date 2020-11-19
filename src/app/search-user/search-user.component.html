@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav  offset-9 nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Meni
+        </a>
+        <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item pozadina" href="user">Profil</a>
+          <a class="dropdown-item pozadina" href="searchUser">Pretraga korisnika</a>
+          <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+          <a class="dropdown-item pozadina" href="newBook">Dodavanje knjige</a>
+          <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+          <a class="dropdown-item pozadina" href="newEvent">Dodavanje dogadjaja</a>
+          <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Dodavanje zanra</a>
+          <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Brisanje zanra</a>
+          <a class="dropdown-item pozadina" href="newPassword">Menjanje lozinke</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+
+<form class="form-inline  row" style="text-align: center; margin: 5px auto;">
+  <div class="col-12" style="text-align: center; margin: auto;">
+    <label>Pretrazite korisnike. Unesite u polja po kojima zelite da pretrazujete korisnika </label>
+  </div>
+  <input class="form-control col-3 " style="background-color: lightgrey; border-color:#292b2c; border-radius: 25px;"
+    type="text" placeholder="Ime" aria-label="Search" name="this.searchName" [(ngModel)]="this.searchName">
+  <input class="form-control col-3" style="background-color: lightgrey; border-color:#292b2c; border-radius: 25px;"
+    type="text" placeholder="Prezime" aria-label="Search" name="this.searchSurname" [(ngModel)]="this.searchSurname">
+  <input class="form-control col-3" style="background-color: lightgrey; border-color:#292b2c; border-radius: 25px;"
+    type="text" placeholder="Korisnicko ime" aria-label="Search" name="this.searchUsername"
+    [(ngModel)]="this.searchUsername">
+  <input class="form-control col-3" style="background-color: lightgrey; border-color:#292b2c; border-radius: 25px;"
+    type="text" placeholder="Email" aria-label="Search" name="this.searchEmail" [(ngModel)]="this.searchEmail">
+
+  <button class="col-2 offset-5" (click)="searchBook() "> Pretrazi </button>
+  <label class="col-6 offset-3" style="text-align: center;"> {{this.message}}</label>
+</form>
+
+<table class="table table-dark" style="border-radius: 25px; border-top-left-radius: 0mm; border-top-right-radius: 0mm;
+      color: lightgrey;" *ngIf="this.searchedUsers">
+  <tr>
+    <th style="width: 20%;"> Ime </th>
+    <th style="width: 20%;"> Prezime </th>
+    <th style="width: 20%;"> Korisnicko ime </th>
+    <th style="width: 20%;"> Email </th>
+    <th style="width: 20%; text-align: center;"> Slika </th>
+  </tr>
+  <tr *ngFor='let user of this.searchedUsers'>
+    <td style="vertical-align: middle;"> {{user.name}} </td>
+    <td style="vertical-align: middle;"> {{user.surname}} </td>
+    <td style="vertical-align: middle;"> <a href="user/{{user.id}}">{{user.username}}</a> </td>
+    <td style="vertical-align: middle;"> {{user.email}} </td>
+    <td style="text-align: center;"> <img id="37" src="{{user.photoPath}}" [alt]="'poy'" style=" width: 1cm;  ">
+    </td>
+  </tr>
+</table>

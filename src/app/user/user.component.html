@@ -1,0 +1,294 @@
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav  offset-9 nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Meni
+        </a>
+        <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item pozadina" (click)="skok('user')" >Profil</a>
+          <a class="dropdown-item pozadina" (click)="skok('searchUser')">Pretraga korisnika</a>
+          <a class="dropdown-item pozadina" (click)="skok('searchBook')">Pretraga knjiga</a>
+          <a class="dropdown-item pozadina" (click)="skok('newBook')">Dodavanje knjige</a>
+          <a class="dropdown-item pozadina" (click)="skok('allEvents')">Svi dogadjaji</a>
+          <a class="dropdown-item pozadina" (click)="skok('newEvent')">Dodavanje dogadjaja</a>
+          <a class="dropdown-item pozadina" (click)="skok('newGenre')" *ngIf="this.meType=='admin'">Dodavanje zanra</a>
+          <a class="dropdown-item pozadina" (click)="skok('newGenre')" *ngIf="this.meType=='admin'">Brisanje zanra</a>
+          <a class="dropdown-item pozadina" (click)="skok('newPassword')">Menjanje lozinke</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+<div class="row" style="margin: 10px;" *ngIf="user">
+  <div class="col-6">
+    <form>
+      <table>
+        <tr>
+          <td><b>Ime: &nbsp;</b></td>
+          <td>
+            <label *ngIf="(!this.editName)" style="width: 4cm; text-align: center;"> {{ this.user.name}}</label>
+            <input *ngIf="(this.editName)" type='text' name='this.user.name' [(ngModel)]='this.user.name'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 4cm; ">
+            &nbsp;
+            <button (click)='changeEdit("Name")' style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+              *ngIf="(!this.editName) && this.me">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)='changeEdit("Name");update()'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editName)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Prezime: &nbsp;</b></td>
+          <td>
+            <label *ngIf="(!this.editSurname)" style="width: 4cm; text-align: center;"> {{ this.user.surname}}</label>
+            <input *ngIf="(this.editSurname)" type='text' name='this.user.surname' [(ngModel)]='this.user.surname'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 4cm; ">
+            &nbsp;
+            <button (click)='changeEdit("Surname")' style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+              *ngIf="(!this.editSurname) && this.me">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)='changeEdit("Surname");update()'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editSurname)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Grad: &nbsp;</b></td>
+          <td>
+            <label *ngIf="(!this.editTown)" style="width: 4cm; text-align: center;"> {{ this.user.town}}</label>
+            <input *ngIf="(this.editTown)" type='text' name='this.user.town' [(ngModel)]='this.user.town'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 4cm; ">
+            &nbsp;
+            <button (click)='changeEdit("Town")' style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+              *ngIf="(!this.editTown) && this.me">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)='changeEdit("Town");update()'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editTown)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Datum rodjenja: &nbsp;</b></td>
+          <td>
+            <label *ngIf="(!this.editDate)" style="width: 4cm; text-align: center;">
+              {{ this.user.date.toLocaleString()}}</label>
+            <input *ngIf="(this.editDate)" type='date' name='this.newDate' [(ngModel)]='this.newDate'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 4cm; ">
+            &nbsp;
+            <button (click)='changeEdit("Date")' style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+              *ngIf="(!this.editDate) && this.me">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)='changeEdit("Date");update()'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editDate)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+            <div class="row alert alert-danger col-md-6 offset-3"
+              style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageError)">
+              <label style="text-align: center; vertical-align: middle;">{{this.messageError}}</label>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td><b>Fotografija: &nbsp;</b> </td>
+          <td>
+            <img id="32" src="{{this.user.photoPath}}" [alt]="'poy'" style=" width: 5cm;  " *ngIf="((!this.editPhoto))">
+            <input #imageInput type="file" accept="image/*" style="margin-left: 0; border-radius: 15px;"
+              (change)="checkPhoto($event)" multiple="false" *ngIf="((this.editPhoto))">
+          </td>
+          <td><button (click)='changeEdit("Photo")' style="background-color: rgb(160, 220, 170); border-radius: 10px;  "
+              *ngIf="(!this.editPhoto) && this.me">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)='changeEdit("Photo");updatePhoto()'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px;  " *ngIf="(this.editPhoto)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+          </td>
+
+        </tr>
+        <tr>
+          <td><b>Aktivan: &nbsp;</b></td>
+          <td>
+            <label *ngIf="(this.lastSeen=='Aktivan')"
+              style="width: 4cm; text-align: center; color: green; vertical-align: middle;">
+              Aktivan </label>
+            <label *ngIf="(this.lastSeen!='Aktivan')" style="width: 4cm; text-align: center; vertical-align: middle;">
+              Poslednji put : {{ this.lastSeen}}</label>
+        </tr>
+      </table>
+    </form>
+    <br />
+
+  </div>
+  <div class="col-3" *ngIf="this.me">
+    <b>Obavestenja:</b> <br>
+    {{this.notifications}} <label *ngIf="user.notification==null || user.notification=='' "> Nemate novih
+      obavestenja</label>
+    <br>
+
+    <button (click)="validateUser()" *ngIf='!me && this.meType=="admin" && this.user.type==""'>Odobri zahtev za
+      registraciju</button>
+    <button (click)="validateUserToModerator()" *ngIf="!me && this.meType=='admin' && this.user.type=='user'">Moderator
+      postani</button>
+    <button (click)="validateUser()" *ngIf="!me && this.meType=='admin' && this.user.type=='moderator'">Obican korisnik
+      postani</button>
+  </div>
+  <div class="col-3" *ngIf="!this.me && follow==false">
+    <button (click)="followUser()">Prati korisnika</button>
+  </div>
+  <div class="col-3" *ngIf="!this.me && follow==true">
+    <button (click)="unfollowUser()">Otprati korisnika</button>
+  </div>
+</div>
+<!--{{user.name}}||{{user.surname}}||{{user.username}}||{{user.date}}||{{user.town}}||{{this.user.email}}-->
+<div class="row col-12 " style="margin: 20px auto">
+  <label *ngIf="!this.showComments" (click)="(this.showComments=true)"> Prikazi komentare: </label>
+  <i *ngIf="!this.showComments" (click)="(this.showComments=true)" class="material-icons"
+    style="vertical-align: middle;">keyboard_arrow_down</i>
+  <label *ngIf="this.showComments" (click)="(this.showComments=false)"> Sakrij komentare: </label>
+  <i *ngIf="this.showComments" (click)="(this.showComments=false)" class="material-icons"
+    style="vertical-align: middle;">keyboard_arrow_up</i>
+  <table *ngIf="this.showComments && this.allComments && this.allComments.length>0" class="table table-dark" style="
+    color: lightgrey; background-color:#292b2c; margin-bottom: 0;">
+    <tr>
+      <th style="width: 25%;"> Naziv: </th>
+      <th style="width: 25%;"> Autori: </th>
+      <th style="width: 25%;"> Komentar: </th>
+      <th style="width: 25%;"> Ocena: </th>
+    </tr>
+    <tr *ngFor='let comment1 of allComments'>
+      <td> <a href="book/{{comment1.idBook}}"> {{comment1.title}} </a></td>
+      <td> {{comment1.authors}} </td>
+      <td> {{comment1.comment}} </td>
+      <td> {{comment1.rate}} </td>
+    </tr>
+  </table>
+  <mat-paginator *ngIf="this.showComments && this.allComments && this.allComments.length>0" style="background-color:#292b2c; width: 100%;border-radius: 25px;
+     border-top-left-radius: 0mm; border-top-right-radius: 0mm; " [length]="this.allCommentsLength"
+    [pageSize]="this.commPerPage" [pageSizeOptions]="this.pageSizeOptions" (page)="onChangePage($event)">
+  </mat-paginator>
+  <label style="text-align: center;" class="col-12" *ngIf="this.showComments && this.allCommentsLength==0"> Ne postoje
+    komentari za ovu kjnigu</label>
+</div>
+
+
+<div class="row col-12 " style="margin: 20px auto">
+  <label *ngIf="!this.showReading" (click)="(this.showReading=true)"> Prikazi listu trenutnih: </label>
+  <i *ngIf="!this.showReading" (click)="(this.showReading=true)" class="material-icons"
+    style="vertical-align: middle;">keyboard_arrow_down</i>
+  <label *ngIf="this.showReading" (click)="(this.showReading=false)"> Sakrij listu trenutnih: </label>
+  <i *ngIf="this.showReading" (click)="(this.showReading=false)" class="material-icons"
+    style="vertical-align: middle;">keyboard_arrow_up</i>
+  <table *ngIf="this.showReading && this.reading && this.reading.length>0" class="table table-dark" style="
+    color: lightgrey; background-color:#292b2c; margin-bottom: 0;">
+    <tr>
+      <th style="width: 25%;"> Naziv: </th>
+      <th style="width: 25%;"> Autori: </th>
+      <th style="width: 25%;"> Zanr: </th>
+    </tr>
+    <tr *ngFor='let book of reading'>
+      <td> <a href="book/{{book.idBook}}"> {{book.title}} </a></td>
+      <td> {{book.authors}} </td>
+      <td> {{book.genre}} </td>
+    </tr>
+  </table>
+  <mat-paginator *ngIf="this.showReading && this.reading && this.reading.length>0" style="background-color:#292b2c; width: 100%;border-radius: 25px;
+     border-top-left-radius: 0mm; border-top-right-radius: 0mm; " [length]="this.allReadingLength"
+    [pageSize]="this.readingPerPage" [pageSizeOptions]="this.pageSizeOptions" (page)="onChangePageReading($event)">
+  </mat-paginator>
+  <label style="text-align: center;" class="col-12" *ngIf="this.showReading && this.allReadingLength==0"> Trenutno ne
+    citate ni jednu knjigu</label>
+
+</div>
+
+
+<div class="row col-12 " style="margin: 20px auto">
+  <label *ngIf="!this.showWishlist" (click)="(this.showWishlist=true)"> Prikazi listu za citanje: </label>
+  <i *ngIf="!this.showWishlist" (click)="(this.showWishlist=true)" class="material-icons"
+    style="vertical-align: middle;">keyboard_arrow_down</i>
+  <label *ngIf="this.showWishlist" (click)="(this.showWishlist=false)"> Sakrij listu za citanje: </label>
+  <i *ngIf="this.showWishlist" (click)="(this.showWishlist=false)" class="material-icons"
+    style="vertical-align: middle;">keyboard_arrow_up</i>
+  <table *ngIf="this.showWishlist && this.wishlist && this.wishlist.length>0" class="table table-dark" style="
+    color: lightgrey; background-color:#292b2c; margin-bottom: 0;">
+    <tr>
+      <th style="width: 25%;"> Naziv: </th>
+      <th style="width: 25%;"> Autori: </th>
+      <th style="width: 25%;"> Zanr: </th>
+    </tr>
+    <tr *ngFor='let book of wishlist'>
+      <td> <a href="book/{{book.idBook}}"> {{book.title}} </a></td>
+      <td> {{book.authors}} </td>
+      <td> {{book.genre}} </td>
+      <td *ngIf="this.me" style="text-align: center; width: 1cm;">
+        <button style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+          (click)="deleteFromReadBook(book.idBook)">
+          <i class="material-icons" style="vertical-align: middle;">delete</i>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <mat-paginator *ngIf="this.showWishlist && this.wishlist && this.wishlist.length>0" style="background-color:#292b2c; width: 100%;border-radius: 25px;
+     border-top-left-radius: 0mm; border-top-right-radius: 0mm; " [length]="this.allWishlistLength"
+    [pageSize]="this.wishlistPerPage" [pageSizeOptions]="this.pageSizeOptions" (page)="onChangePageWishlist($event)">
+  </mat-paginator>
+  <label style="text-align: center;" class="col-12" *ngIf="this.showWishlist && this.allWishlistLength==0"> Trenutno
+    nemate knjiga u listi za citanje</label>
+</div>
+
+<div class=" col-12 " style="margin: 0; padding-right: 0;">
+  <label *ngIf="!this.showRead" (click)="(this.showRead=true)"> Prikazi listu procitanih: </label>
+  <i *ngIf="!this.showRead" (click)="(this.showRead=true)" class="material-icons"
+    style="vertical-align: middle;">keyboard_arrow_down</i>
+  <label *ngIf="this.showRead" (click)="(this.showRead=false)"> Sakrij listu procitanih: </label>
+  <i *ngIf="this.showRead" (click)="(this.showRead=false)" class="material-icons"
+    style="vertical-align: middle;">keyboard_arrow_up</i>
+  <table *ngIf="this.showRead && this.read && this.read.length>0" class="table table-dark" style="
+    color: lightgrey; background-color:#292b2c; margin-bottom: 0;">
+    <tr>
+      <th style="width: 25%;"> Naziv: </th>
+      <th style="width: 25%;"> Autori: </th>
+      <th style="width: 25%;"> Zanr: </th>
+    </tr>
+    <tr *ngFor='let book of read'>
+      <td> <a href="book/{{book.idBook}}"> {{book.title}} </a></td>
+      <td> {{book.authors}} </td>
+      <td> {{book.genre}} </td>
+    </tr>
+  </table>
+  <mat-paginator *ngIf="this.showRead && this.read && this.read.length>0" style="background-color:#292b2c; width: 100%;border-radius: 25px;
+     border-top-left-radius: 0mm; border-top-right-radius: 0mm; " [length]="this.allReadLength"
+    [pageSize]="this.readPerPage" [pageSizeOptions]="this.pageSizeOptions" (page)="onChangePageRead($event)">
+  </mat-paginator>
+  <label style="text-align: center;" class="col-12" *ngIf="this.showRead && this.allReadLength==0"> Ne postoji ni jedna
+    knjiga u listi za citanje</label>
+</div>
+<div class="col-4 offset-4" *ngIf="this.showRead && this.read && this.read.length>0">
+  <div>
+    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+      [options]="pieChartOptions" [legend]="pieChartLegend" [plugins]="pieChartPlugins">
+    </canvas>
+  </div>
+</div>
+
+
+{{me}} {{meType}} {{user.type}}
+{{ this.user.type==""}}

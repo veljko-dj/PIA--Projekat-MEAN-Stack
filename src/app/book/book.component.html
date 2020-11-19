@@ -1,0 +1,289 @@
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;"
+*ngIf="this.user.type!='guest'">
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav  offset-9 nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Meni
+      </a>
+      <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+        <a class="dropdown-item pozadina" href="user">Profil</a>
+        <a class="dropdown-item pozadina" href="searchUser">Pretraga korisnika</a>
+        <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+        <a class="dropdown-item pozadina" href="newBook">Dodavanje knjige</a>
+        <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        <a class="dropdown-item pozadina" href="newEvent">Dodavanje dogadjaja</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Dodavanje zanra</a>
+        <a class="dropdown-item pozadina" href="newGenre" *ngIf="this.user.type=='admin'">Brisanje zanra</a>
+        <a class="dropdown-item pozadina" href="newPassword">Menjanje lozinke</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="login" (click)="logOut()"> Odjavi se</a>
+    </li>
+
+  </ul>
+</div>
+</nav>
+{{user.type}}
+<nav class="navbar navbar-expand  fixed-top navbar-dark bg-dark"
+  style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;" *ngIf=" user && this.user.type=='guest'">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav  offset-9 nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  " href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Meni
+        </a>
+        <div class="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item pozadina" href="searchBook">Pretraga knjiga</a>
+          <a class="dropdown-item pozadina" href="allEvents">Svi dogadjaji</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="login">Uloguj se! </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registration">Registruj se!</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+
+
+<div class="row  ">
+  <div class="col-3">
+    <form>
+      <table>
+        <tr>
+          <td><b> Naslovna: &nbsp;</b> </td>
+          <td style=" text-align: center;">
+            <img *ngIf="this.book.photoPath" src="{{this.book.photoPath}}" [alt]="'poy'" style="width: 3cm;">
+          </td>
+        </tr>
+        <tr>
+          <td><b>Naziv: &nbsp;</b></td>
+          <td style=" text-align: center;">
+            <label *ngIf="(!this.editTitle)" style="width: 4cm;"> {{ this.book.title}}</label>
+            <input *ngIf="(this.editTitle)" type='text' name='this.book.title' [(ngModel)]='this.book.title'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 4cm; ">
+            <button (click)='(this.editTitle=!this.editTitle)'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+              *ngIf="(!this.editTitle) && this.user.type=='admin' ">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)='(  updateBook()&&(this.editTitle=(!this.editTitle)  )   )'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editTitle)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Autori: &nbsp;</b></td>
+          <td style=" text-align: center;">
+            <label *ngIf="(!this.editAuthors)" style="width: 4cm;"> {{ this.book.authors}}</label>
+            <input *ngIf="(this.editAuthors)" type='text' name='this.book.authors' [(ngModel)]='this.book.authors'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 3m; ">
+            <button (click)='this.editAuthors=!this.editAuthors'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+              *ngIf="(!this.editAuthors)  && this.user.type=='admin' ">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)='updateBook()&& this.editAuthors=!this.editAuthors '
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editAuthors)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Datum izdavanja: &nbsp;</b></td>
+          <td style=" text-align: center;">
+            <label *ngIf="this.book.date && !this.editDate" style="width: 4cm;">
+              {{ this.book.date.toLocaleString()}}</label>
+            <input *ngIf="(this.editDate)" type='date' name='this.newDate' [(ngModel)]='this.newDate'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 3m; ">
+            <button (click)='this.editDate=!this.editDate'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+              *ngIf="(!this.editDate) && this.user.type=='admin'  ">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)=' checkNewDate() && updateBook()'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editDate)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+            <div class="row alert alert-danger  "
+              style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px" *ngIf="(this.messageError)">
+              <label style="text-align: center; vertical-align: middle;">{{this.messageError}}</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Zanrovi: &nbsp;</b></td>
+          <td style=" text-align: center;" *ngIf="!this.editGenre">
+            <label *ngIf="this.book.genre && !this.editGenre" style="width: 3cm;">
+              {{ this.book.genre.toString()}}
+            </label>
+          </td>
+          <td *ngIf="this.editGenre  ">
+            <select name="newGenre0" [(ngModel)]="newGenre0"
+              style=" width: 3cm;background-color: #292b2c; color: lightgrey;">
+              <option value="Zanr">Zanr</option>
+              <option *ngFor="let genre1 of  genres" value="{{genre1.name}}" label="{{genre1.name}}"></option>
+            </select><br>
+            <select name="newGenre1" [(ngModel)]="newGenre1"
+              style=" width: 3cm;background-color: #292b2c; color: lightgrey;">
+              <option value="Zanr">Zanr</option>
+              <option *ngFor="let genre1 of  genres" value="{{genre1.name}}" label="{{genre1.name}}"></option>
+            </select><br>
+            <select name="newGenre2" [(ngModel)]="newGenre2"
+              style=" width: 3cm;background-color: #292b2c; color: lightgrey;">
+              <option value="Zanr">Zanr</option>
+              <option *ngFor="let genre1 of  genres" value="{{genre1.name}}" label="{{genre1.name}}"></option>
+            </select>
+          </td>
+          <td>
+            <div style="padding: 0; margin: 0; padding-left: -20;" style="vertical-align: middle;">
+              <button (click)='this.editGenre=!this.editGenre'
+                style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+                *ngIf="(!this.editGenre)  && this.user.type=='admin'">
+                <i class="material-icons" style="vertical-align: middle;">create</i>
+              </button>
+              <button (click)=' checkNewGenre() && updateBook()'
+                style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editGenre)">
+                <i class="material-icons" style="vertical-align: middle;">check</i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Kratak opis: &nbsp;</b></td>
+          <td style=" text-align: center;  ">
+            <label *ngIf="(!this.editDescription)" style="width: 4cm;">
+              {{this.book.description}} </label>
+            <input *ngIf="(this.editDescription)" type='text' name='this.book.description'
+              [(ngModel)]='this.book.description'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; width: 4cm; ">
+            <button (click)='(this.editDescription=!this.editDescription)'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; "
+              *ngIf="(!this.editDescription)  && this.user.type=='admin'">
+              <i class="material-icons" style="vertical-align: middle;">create</i>
+            </button>
+            <button (click)='( updateBook() && (this.editDescription=!this.editDescription)   )'
+              style="background-color: rgb(160, 220, 170); border-radius: 10px; " *ngIf="(this.editDescription)">
+              <i class="material-icons" style="vertical-align: middle;">check</i>
+            </button>
+          </td>
+
+        </tr>
+        <tr>
+          <td><b>Ocena: &nbsp;</b></td>
+          <td style=" text-align: center;  ">
+            <label *ngIf="(this.book.rate=='0'|| this.book.rate=='0.0')">
+              N.O. </label>
+          </td>
+          <td>
+            <label *ngIf="(this.book.rate!='0'&& this.book.rate!='0.0')" style=" text-align: center; margin: 0 auto ">
+              {{this.book.rate}} </label>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div class="col-6" *ngIf='this.book.valid=="false" '>
+    <b>Ova knjiga nije validna.</b>
+    <br>
+    <button class="zelenoDugme " (click)="validateBook()" *ngIf="this.user.type=='admin'||this.user.type=='moderator'"> Validiraj knjigu</button>
+  </div>
+  <div class="col-3 offset-1" style="text-align: center;" *ngIf="(progressWidth>50 || this.readingStatus=='readd') &&  this.book.valid=='true'">
+    <div class="row ">
+      <textarea maxlength="100" class="col-9 unos" cols="20" rows="5" name="description" [(ngModel)]="this.comm"
+        placeholder=" Komentar do 100 karaktera.."> </textarea>
+      <div class="rating"> <input type="radio" name="rating" [(ngModel)]="rating" value="10" id="10"><label
+          for="10">☆</label> <input type="radio" name="rating" [(ngModel)]="rating" value="9" id="9"><label
+          for="9">☆</label> <input type="radio" name="rating" [(ngModel)]="rating" value="8" id="8"><label
+          for="8">☆</label> <input type="radio" name="rating" [(ngModel)]="rating" value="7" id="7"><label
+          for="7">☆</label> <input type="radio" name="rating" [(ngModel)]="rating" value="6" id="6"><label
+          for="6">☆</label><input type="radio" name="rating" [(ngModel)]="rating" value="5" id="5"><label
+          for="5">☆</label> <input type="radio" name="rating" [(ngModel)]="rating" value="4" id="4"><label
+          for="4">☆</label> <input type="radio" name="rating" [(ngModel)]="rating" value="3" id="3"><label
+          for="3">☆</label> <input type="radio" name="rating" [(ngModel)]="rating" value="2" id="2"><label
+          for="2">☆</label> <input type="radio" name="rating" [(ngModel)]="rating" value="1" id="1"><label
+          for="1">☆</label>
+      </div>
+
+    </div>
+    <div class="row ">
+      <button class="zelenoDugme offset-2" (click)="addComm()" *ngIf="!this.editComm"> Dodaj komentar</button>
+      <button class="zelenoDugme offset-2" (click)="updateComm()" *ngIf="this.editComm"> Izmeni svoj komentar</button>
+    </div>
+    <div class="row alert alert-danger" style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px"
+      *ngIf="(this.messageCommError)">
+      <label style="text-align: center; vertical-align: middle;">{{this.messageCommError}}</label>
+    </div>
+    <div class="row " style="border-radius: 25px; text-align: center; padding: 6px 20px 3px 20px"
+      *ngIf="(this.messageComm)">
+      <label style="text-align: center; vertical-align: middle;">{{this.messageComm}}</label>
+    </div>
+  </div>
+  <div class="col-3 " *ngIf="this.user.type!='guest'  &&  this.book.valid=='true'">
+    <input style="margin-top: 6px;" type="radio" id="np" name="this.readingStatus" [(ngModel)]="this.readingStatus"
+      value="none" (change)="changeReadingStatus()"> <label for="np">Oznaci kao neprocitano</label>
+    <br>
+    <input type="radio" name="this.readingStatus" id="p" [(ngModel)]="this.readingStatus" value="readd"
+      (change)="changeReadingStatus()"><label for="p"> Oznaci kao procitano</label>
+    <br>
+    <input type="radio" name="this.readingStatus" id="w" [(ngModel)]="this.readingStatus" value="wishlist"
+      (change)="changeReadingStatus()"> <label for="w">Dodaj u listu za citanje </label>
+    <br>
+    <input type="radio" name="this.readingStatus" id="r" [(ngModel)]="this.readingStatus" value="reading">
+    <label for="r">Trenutno citam</label>
+    <div class="row" *ngIf="(this.readingStatus=='reading')">
+      <div class="progress col-10" style="padding: 0;">
+        <div id="bbaarr" class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"
+          [style.width.%]="this.progressWidth" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <input class="unos col-5" type="number" style="  margin-top: 5px;" name="pageNum" [(ngModel)]="pageNum"
+        placeholder="Br. procitanih">
+      <input class="unos col-5" type="number" style="  margin-top: 5px;" name="pageMax" [(ngModel)]="pageMax"
+        placeholder="Ukupan broj">
+      <button class="zelenoDugme col-6 offset-3" (click)="changeReadingStatus()">Azuriraj </button>
+    </div>
+
+  </div>
+  <div class="row col-12 " style="margin: 20px auto"  *ngIf="this.book.valid=='true'">
+    <label *ngIf="!this.showComments" (click)="(this.showComments=true)"> Prikazi komentare: </label>
+    <i *ngIf="!this.showComments" (click)="(this.showComments=true)" class="material-icons"
+      style="vertical-align: middle;">keyboard_arrow_down</i>
+    <label *ngIf="this.showComments" (click)="(this.showComments=false)"> Sakrij komentare: </label>
+    <i *ngIf="this.showComments" (click)="(this.showComments=false)" class="material-icons"
+      style="vertical-align: middle;">keyboard_arrow_up</i>
+    <table *ngIf="this.showComments && this.allComments.length>0" class="table table-dark" style="border-radius: 25px; border-top-left-radius: 0mm; border-top-right-radius: 0mm;
+      color: lightgrey;">
+      <tr>
+        <th style="width: 3cm;" *ngIf="this.user.type!='guest'"> Korisnik: </th>
+        <th style="width: 5cm;"> Komentar: </th>
+        <th style="width: 3cm;"> Ocena: </th>
+      </tr>
+      <tr *ngFor='let comment1 of allComments'>
+        <td *ngIf="this.user.type!='guest'">
+          <!-- <a *ngIf="this.user.type=='guest'">{{comment1.username}}</a> -->
+          <a href="user/{{comment1.idUser}}">{{comment1.username}}</a>
+        </td>
+        <td> {{comment1.comment}} </td>
+        <td> {{comment1.rate}} </td>
+      </tr>
+    </table>
+    <label style="text-align: center;" class="col-12" *ngIf="this.showComments && this.allComments.length==0"> Ne
+      postoje komentari za ovu kjnigu</label>
+  </div>
+</div>
+<br />
+
+
+
+
